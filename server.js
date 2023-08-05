@@ -39,7 +39,7 @@ if(process.env.NODE_ENV === "devolopment"){
     app.use(morgan('dev'))
 }
 
-app.use(express.static(path.resolve(__dirname , "./public")))
+app.use(express.static(path.resolve(__dirname , "./client/dist")))
 
 
 app.get("/api/v1/test" , (req , res)=>{
@@ -55,7 +55,9 @@ app.use("/api/v1/users" , userRouter)
 
 
 
-
+app.get('*' , (req , res)=>{
+  res.sendFile(path.resolve(__dirname , "./client/dist" , "index.html"))
+})
 
 
 
