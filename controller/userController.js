@@ -24,7 +24,7 @@ const login = async (req, res) => {
   // check if password is correct
 
   const user = await User.findOne({ email: req.body.email });
-  if (!user) throw new UnauthenticatedError('Invalid Email..');
+  if (!user) throw new UnauthenticatedError('User is not registered');
 
   const isPasswordCorrect = await comparePassword(req.body.password , user.password);
   if (!isPasswordCorrect) throw new UnauthenticatedError('Invalid password..');

@@ -329,3 +329,16 @@ button:disabled {
   background: #ffeeee;
   color: #d66a6a;
 }
+
+.password-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.toggle-password {
+  margin-left: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: blue;
+}

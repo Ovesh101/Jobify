@@ -56,6 +56,7 @@ import mongoose from "mongoose";
   };
 // Create a Job
 const createJob = async (req , res)=>{
+  console.log("req.body" , req.body);
     req.body.createdBy = req.user.userId
     console.log(req.body.createdBy);
     

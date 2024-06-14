@@ -1,26 +1,26 @@
-import React from 'react'
+import React from 'react';
 
-const FormRow = ({type , name , labelText , defaultValue , onChange}) => {
+const FormRow = ({ type, name, labelText, defaultValue, onChange }) => {
   return (
     <div className="form-row">
-          <label htmlFor={name} className='form-label'>
-            {labelText || name}
-          </label>
-          <input 
+      <label htmlFor={name} className="form-label">
+        {labelText || name}
+      </label>
+      {defaultValue === 'Pending' && name === 'jobStatus' ? (
+        <div className="form-text">{defaultValue}</div>
+      ) : (
+        <input
+          type={type}
+          id={name}
+          name={name}
+          className="form-input"
+          required
+          defaultValue={defaultValue}
+          onChange={onChange}
+        />
+      )}
+    </div>
+  );
+};
 
-            type={type}
-            id={name} 
-            name={name}
-            className='form-input'
-            required
-            defaultValue={defaultValue}
-            onChange={onChange}
-
-
-             />
-
-        </div>
-  )
-}
-
-export default FormRow
+export default FormRow;

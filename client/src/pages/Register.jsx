@@ -29,7 +29,7 @@ const Register = () => {
       <Form method='post'  className='form'>
         <Logo />
         <h4>Register</h4>
-        < FormRow type='text' name='name' />
+        < FormRow type='text' name='name' labelText="FirstName" />
         < FormRow type='text' name='lastName' labelText='lastName'  />
         < FormRow type='text' name='location'  />
         < FormRow type='email' name='email'  />

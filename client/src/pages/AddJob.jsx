@@ -1,51 +1,48 @@
 
-import { FormRow } from '../components';
+import { FormRow, FormRowSelect } from '../components';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, Form, useNavigation, redirect } from 'react-router-dom';
 import { JOB_STATUS, JOB_TYPE } from '../../../utils/constant';
-import { Form, useNavigation, redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import customFetch from '../utils/customFetch';
-import FormRowSelect from '../components/FormRowSelect';
 
-export const action = async ({request})=>{
-
+export const action = async ({ request }) => {
   const formData = await request.formData();
-  const data = Object.fromEntries(formData)
+  const data = Object.fromEntries(formData);
+  console.log("Form data", data);
+  data.jobStatus = "Pending"
   try {
-    await customFetch.post("/jobs" , data);
-    toast.success("Job Added Successfully")
+    await customFetch.post("/jobs", data);
+    toast.success("Job Added Successfully");
     return redirect("all-jobs");
-    
   } catch (error) {
-    toast.error(error?.response?.data?.msg)
+    toast.error(error?.response?.data?.msg);
     return error;
-    
   }
-}
+};
 
 const AddJob = () => {
-  const {user} = useOutletContext();
+  const { user } = useOutletContext();
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting'
+  const isSubmitting = navigation.state === 'submitting';
+
   return (
-   <Wrapper>
-    <Form method='post' className='form'>
-      <h4 className='form-title'>Add Job</h4>
-      <div className="form-center">
-        <FormRow type='text' name='position'  />
-        <FormRow type='text' name='company'  />
-        <FormRow type='text' name='jobLocation' labelText='Job Location' defaultValue={user.location}  />
-       <FormRowSelect  name='jobStatus' labelText='Job Status' defaultValue={JOB_STATUS.PENDING} list={Object.values(JOB_STATUS)} /> 
-       <FormRowSelect  name='jobType' labelText='Job Type' defaultValue={JOB_TYPE.FULL_TIME} list={Object.values(JOB_TYPE)} /> 
-        <button type='submit' className='btn btn-block form-btn' disabled={isSubmitting}>{isSubmitting ? 'submitting' : 'Submit'}</button>
-      </div>
-    </Form>
+    <Wrapper>
+      <Form method="post" className="form">
+        <h4 className="form-title">Add Job</h4>
+        <div className="form-center">
+          <FormRow type="text" name="position" />
+          <FormRow type="text" name="company" />
+          <FormRow type="text" name="jobLocation" labelText="Job Location"  />
+          <FormRow type="text" name="jobStatus" labelText="Job Status"  />
+          <FormRowSelect name="jobType" labelText="Job Type" defaultValue={JOB_TYPE.FULL_TIME} list={Object.values(JOB_TYPE)} />
+          <button type="submit" className="btn btn-block form-btn" disabled={isSubmitting}>
+            {isSubmitting ? 'Submitting' : 'Submit'}
+          </button>
+        </div>
+      </Form>
+    </Wrapper>
+  );
+};
 
-   </Wrapper>
-
-    
-  )
-}
-
-export default AddJob
+export default AddJob;
