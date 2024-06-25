@@ -4,6 +4,7 @@ import Wrapper from '../assets/wrappers/RegisterAndLoginPage'
 import { Logo , FormRow } from '../components'
 import customFetch from '../utils/customFetch';
 import {toast} from "react-toastify"
+import { useState } from 'react';
 
 
 export const action = async({request})=>{
@@ -21,6 +22,7 @@ export const action = async({request})=>{
 }
 
 const Register = () => {
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const navigation = useNavigation();
   console.log(navigation);
   const isSubmitting = navigation.state === "submitting"
@@ -33,7 +35,14 @@ const Register = () => {
         < FormRow type='text' name='lastName' labelText='lastName'  />
         < FormRow type='text' name='location'  />
         < FormRow type='email' name='email'  />
-        < FormRow type='password' name='password'  />
+        < FormRow type={passwordVisible ? 'text' : 'password'} name='password'  />
+        <button
+              type="button"
+              className="toggle-password"
+              onClick={() => setPasswordVisible(!passwordVisible)}
+            >
+              {passwordVisible ? 'Hide' : 'Show'}
+            </button>
         <button type='submit' className='btn btn-block' disabled={isSubmitting} >{isSubmitting ? "Submitting..." : "Submit"}</button>
         <p>
           Already a member?
