@@ -51,7 +51,8 @@ export  const validateIdParam = withValidationError([
 ])
 
 export const validateRegisterInput = withValidationError([
-    body('name').notEmpty().withMessage('Please Provide name').isLength({min:3 , max : 20}),
+    body('name').notEmpty().withMessage('Please Provide name').isLength({min:4 , max : 20}).withMessage("Name must be atleast 4 character long...").matches(/^[a-zA-Z]+$/)
+    .withMessage('Name must contain only letters'),
     body('email').notEmpty().withMessage('Please Provide Email').isEmail().withMessage("Invalid Email").custom( async (email)=>{
         const user = await User.findOne({email})
         if(user){
@@ -59,8 +60,10 @@ export const validateRegisterInput = withValidationError([
         }
     }),
     body('password').notEmpty().withMessage('Please Provide name').isLength({min:8 }).withMessage("Password must be atleast 8 character long.."),
-    body('lastName').notEmpty().withMessage('Please Provide last name').isLength({min:4 , max : 20}),
-    body('location').notEmpty().withMessage('Please Provide Location').isLength({min:4 , max : 20}),
+    body('lastName').notEmpty().withMessage('Please Provide last name').isLength({min:4 , max : 20}).withMessage("lastname must be atleast 4 character long...").matches(/^[a-zA-Z]+$/)
+    .withMessage('lastname must contain only letters'),
+    body('location').notEmpty().withMessage('Please Provide Location').isLength({min:4 , max : 20}).withMessage("location must be atleast 4 character long...").matches(/^[a-zA-Z]+$/)
+    .withMessage('location must contain only letters'),
     // body('role').isIn(Object.values(ROLE)).withMessage("Invalid  Credentials..")
 ])
 
@@ -74,7 +77,8 @@ export const validateLoginInput = withValidationError ([
   ]);
 
   export const validateUpdateUserInput = withValidationError([
-    body('name').notEmpty().withMessage('Please Provide name').isLength({min:3 , max : 20}),
+    body('name').notEmpty().withMessage('Please Provide name').isLength({min:4 , max : 20}).withMessage("Name must be atleast 4 character long...").matches(/^[a-zA-Z]+$/)
+    .withMessage('Name must contain only letters'),
     body('email').notEmpty().withMessage('Please Provide Email').isEmail().withMessage("Invalid Email").custom( async (email , {req})=>{
         const user = await User.findOne({email})
         if(user  && user._id.toString() != req.user.userId){
@@ -82,7 +86,9 @@ export const validateLoginInput = withValidationError ([
         }
     }),
    
-    body('lastName').notEmpty().withMessage('Please Provide name').isLength({min:4 , max : 20}),
-    body('location').notEmpty().withMessage('Please Provide name').isLength({min:4 , max : 20}),
+    body('lastName').notEmpty().withMessage('Please Provide name').isLength({min:4 , max : 20}).withMessage("lastname must be atleast 4 character long...").matches(/^[a-zA-Z]+$/)
+    .withMessage('lastname must contain only letters'),
+    body('location').notEmpty().withMessage('Please Provide name').isLength({min:4 , max : 20}).withMessage("location must be atleast 4 character long...").matches(/^[a-zA-Z]+$/)
+    .withMessage('location must contain only letters'),
 
   ])
